@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CGV - Phim Hành Động</title>
+
+    <!-- CSS liên kết -->
+    <link rel="stylesheet" href="ASST1.css" />
+
+    <!-- Icon của trang -->
+    <link rel="icon" href="./img/4.png" type="image/png" />
+
+    <!-- Font Awesome để dùng icon dropdown -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Thanh thông báo chạy -->
+      <marquee behavior="scroll" direction="left">
+        CGV Trần Duy Hưng 1-6-2025 Kỉ niệm 22 năm thành lập - tặng free bắp rang
+        bơ và nước khi mua từ 2 vé trở lên
+      </marquee>
+
+      <!-- Phần đầu -->
+      <header></header>
+
+      <!-- Menu điều hướng -->
+      <nav>
+        <ul>
+          <li><a href="./index.php">Trang chủ</a></li>
+          <li class="dropdown">
+            <a href="#">Phim <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-content">
+              <li><a href="./movies.php?category=1">Phim Hành Động</a></li>
+              <li><a href="./movies.php?category=2">Phim Tình Cảm</a></li>
+              <li><a href="./movies.php?category=3">Phim Hoạt Hình</a></li>
+            </ul>
+          </li>
+          <li><a href="./list_cgv.php">Rạp CGV</a></li>
+          <li><a href="./list_user.html">Thành viên</a></li>
+          <li><a href="./ap.html">Tuyển dụng</a></li>
+        </ul>
+      </nav>
+
+      <!-- Form đăng kí mua vé -->
+      <div class="booking-container">
+        <h3>Đặt Vé Xem Phim</h3>
+        <form action="datve_process.php" method="POST" id="bookingForm">
+          <div>
+            <input
+              type="text"
+              name="customer_name"
+              placeholder="Tên Khách hàng"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <input
+              type="text"
+              name="phone"
+              placeholder="Số Điện Thoại"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <select name="movie_id" required>
+              <option value="">Chọn phim</option>
+              <option value="1">SUPERMAN</option>
+              <option value="2">THẾ GIỚI KHỦNG LONG</option>
+            </select>
+          </div>
+          <br />
+          <div>
+            <select name="cinema_id" required>
+              <option value="">Chọn rạp</option>
+              <option value="1">CGV Trần Duy Hưng</option>
+              <option value="2">CGV Vincom Bà Triệu</option>
+            </select>
+          </div>
+          <br />
+          <div>
+            <input type="date" name="show_date" required />
+            <input type="time" name="show_time" required />
+          </div>
+          <br />
+          <input type="hidden" name="seats" id="selectedSeats" />
+
+          <div>
+            <label>Chọn Rạp:</label>
+            <select id="rap">
+              <option>CGV Trần Duy Hưng</option>
+              <option>CGV Vincom Bà Triệu</option>
+              <option>CGV AEON Hà Đông</option>
+              <option>CGV Royal City</option>
+              <option>CGV Indochina Plaza</option>
+              <option>CGV Times City</option>
+            </select>
+          </div>
+          <br />
+
+          <div class="theater-info">
+            <div>
+              <label>Thời gian chiếu:</label>
+              <input type="time" id="gioChieu" />
+
+              <p>🔘 2D Phụ Đề Việt</p>
+              <button onclick="setTime('10:30')">10:30</button>
+              <button onclick="setTime('17:00')">17:00</button>
+              <button onclick="setTime('19:20')">19:20</button>
+              <button onclick="setTime('21:40')">21:40</button>
+
+              <p>🔘 2D Lồng Tiếng Việt</p>
+              <button onclick="setTime('15:00')">15:00</button>
+              <button onclick="setTime('18:30')">18:30</button>
+              <button onclick="setTime('22:40')">22:40</button>
+            </div>
+            <div>
+              <label>Ngày chiếu:</label>
+              <input type="date" id="ngayChieu" />
+            </div>
+          </div>
+          <br />
+
+          <div class="screen">MÀN HÌNH</div>
+
+          <div class="seats">
+            <!-- Hàng A - Ghế thường -->
+            <div class="row" data-row="A">
+              <span class="row-label">A</span>
+              <div class="side">
+                <button class="seat">A1</button>
+                <button class="seat">A2</button>
+                <button class="seat">A3</button>
+                <button class="seat">A4</button>
+                <button class="seat">A5</button>
+                <button class="seat">A6</button>
+                <button class="seat">A7</button>
+              </div>
+              <div class="gap"></div>
+              <div class="side">
+                <button class="seat">A8</button>
+                <button class="seat">A9</button>
+                <button class="seat">A10</button>
+                <button class="seat">A11</button>
+                <button class="seat">A12</button>
+                <button class="seat">A13</button>
+                <button class="seat">A14</button>
+                <button class="seat">A15</button>
+              </div>
+            </div>
+
+            <!-- Hàng B - Ghế VIP -->
+            <div class="row" data-row="B">
+              <span class="row-label">B</span>
+              <div class="side">
+                <button class="seat vip">B1</button>
+                <button class="seat vip">B2</button>
+                <button class="seat vip">B3</button>
+                <button class="seat vip">B4</button>
+                <button class="seat vip">B5</button>
+                <button class="seat vip">B6</button>
+                <button class="seat vip">B7</button>
+              </div>
+              <div class="gap"></div>
+              <div class="side">
+                <button class="seat vip">B8</button>
+                <button class="seat vip">B9</button>
+                <button class="seat vip">B10</button>
+                <button class="seat vip">B11</button>
+                <button class="seat vip">B12</button>
+                <button class="seat vip">B13</button>
+                <button class="seat vip">B14</button>
+                <button class="seat vip">B15</button>
+              </div>
+            </div>
+
+            <!-- Hàng C - Ghế VIP -->
+            <div class="row" data-row="C">
+              <span class="row-label">C</span>
+              <div class="side">
+                <button class="seat vip">C1</button>
+                <button class="seat vip">C2</button>
+                <button class="seat vip">C3</button>
+                <button class="seat vip">C4</button>
+                <button class="seat vip">C5</button>
+                <button class="seat vip">C6</button>
+                <button class="seat vip">C7</button>
+              </div>
+              <div class="gap"></div>
+              <div class="side">
+                <button class="seat vip">C8</button>
+                <button class="seat vip">C9</button>
+                <button class="seat vip">C10</button>
+                <button class="seat vip">C11</button>
+                <button class="seat vip">C12</button>
+                <button class="seat vip">C13</button>
+                <button class="seat vip">C14</button>
+                <button class="seat vip">C15</button>
+              </div>
+            </div>
+
+            <!-- Hàng D - Ghế Sweetbox -->
+            <div class="row" data-row="D">
+              <span class="row-label">D</span>
+              <div class="side">
+                <button class="seat sweetbox">D1</button>
+                <button class="seat sweetbox">D2</button>
+                <button class="seat sweetbox">D3</button>
+                <button class="seat sweetbox">D4</button>
+                <button class="seat sweetbox">D5</button>
+                <button class="seat sweetbox">D6</button>
+                <button class="seat sweetbox">D7</button>
+              </div>
+              <div class="gap"></div>
+              <div class="side">
+                <button class="seat sweetbox">D8</button>
+                <button class="seat sweetbox">D9</button>
+                <button class="seat sweetbox">D10</button>
+                <button class="seat sweetbox">D11</button>
+                <button class="seat sweetbox">D12</button>
+                <button class="seat sweetbox">D13</button>
+                <button class="seat sweetbox">D14</button>
+                <button class="seat sweetbox">D15</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend">
+            <span><span class="seat"></span> Ghế thường</span>
+            <span><span class="seat vip"></span> Ghế VIP</span>
+            <span><span class="seat sweetbox"></span> Ghế Sweetbox</span>
+            <span><span class="seat booked"></span> Đã đặt</span>
+          </div>
+
+          <div class="exit">🚪 Cửa ra/vào</div>
+        </form>
+      </div>
+
+      <!-- Khối chứa nút và thông báo -->
+      <div class="center-wrapper">
+        <button onclick="xacNhanDatVe()" class="confirm-button">
+          Xác nhận đặt vé
+        </button>
+        <p id="thongbao" class="hidden success-message">
+          Bạn đã đặt vé thành công! Hãy đến rạp để lấy vé và thanh toán.
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        <span>Chăm sóc khách hàng</span>
+      </footer>
+    </div>
+
+    <script>
+      // chọn ghế
+      const seats = document.querySelectorAll('.seat');
+      seats.forEach((seat) => {
+        seat.addEventListener('click', () => {
+          if (!seat.classList.contains('booked')) {
+            seat.classList.toggle('selected');
+          }
+        });
+      });
+
+      function xacNhanDatVe() {
+        // Thu thập ghế đã chọn
+        const selectedSeats = [];
+        document.querySelectorAll('.seat.selected').forEach((seat) => {
+          selectedSeats.push(seat.textContent);
+        });
+
+        if (selectedSeats.length === 0) {
+          alert('Vui lòng chọn ít nhất 1 ghế!');
+          return;
+        }
+
+        // Cập nhật input hidden
+        document.getElementById('selectedSeats').value =
+          selectedSeats.join(',');
+
+        // Submit form
+        document.getElementById('bookingForm').submit();
+      }
+      // Ghế đã đặt mẫu
+      document.querySelectorAll('.seat')[5].classList.add('booked');
+
+      function setTime(time) {
+        const input = document.getElementById('selectedTime');
+        input.value = time;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+header {
+  background-image: url(1.png);
+  height: 200px;
+  background-size: 100% 100%;
+  /* làm img full khung */
+}
+nav {
+  background-color: #b75797;
+}
+ul {
+  list-style: none;
+  text-align: center;
+}
+li {
+  display: inline-block;
+  /* dàn mục hàng ngang có padding */
+  padding: 10px 30px;
+}
+a {
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+}
+li:hover {
+  background-color: #360a21;
+}
+aside {
+  background-color: #fae8f4;
+  float: left;
+  width: 25%;
+  height: 500px;
+  padding: 20px;
+  /* padding là bên trong */
+}
+h3 {
+  text-transform: uppercase;
+  /* viet hoa */
+}
+aside > div {
+  margin: 15px 0;
+}
+input {
+  width: 200px;
+  height: 30px;
+}
+#btn {
+  background-color: #2a3030;
+  color: white;
+  height: 30px;
+  width: 100px;
+  margin-left: 50px;
+}
+article {
+  float: right;
+  width: 75%;
+  height: 500px;
+}
+#tieude {
+  text-transform: uppercase;
+  text-align: center;
+  color: #d8a3c6;
+  margin: 20px 0;
+}
+.items {
+  display: grid;
+  /* chia thành hàng ngang */
+  grid-template-columns: 1fr 1fr 1fr;
+  /* lưới */
+  grid-gap: 10px;
+  /* khoảng cách */
+  margin-top: 20px;
+  /* khoảng cách */
+}
+.product {
+  border: 1px solid gray;
+  /* đường viền */
+  text-align: center;
+}
+.product > img {
+  width: 60%;
+  height: 50%;
+  padding-top: 20px;
+}
+.price {
+  color: #b75797;
+  font-size: 24px;
+  margin: 10px 0;
+}
+.price_old {
+  text-decoration: line-through;
+
+  font-size: 20px;
+}
+.product > button {
+  background-color: #360a21;
+  color: white;
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;
+}
+footer {
+  color: white;
+  text-transform: uppercase;
+  background-color: #360a21;
+  text-align: center;
+  clear: both;
+  padding: 20px 0;
+}
