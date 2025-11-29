@@ -69,255 +69,255 @@ foreach ($seats as $seat) {
     <link rel="icon" href="./img/4.png">
 
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
 
-    .container {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 20px;
-    }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    .header {
-        background: #e50914;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
-    }
+        .header {
+            background: #e50914;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+        }
 
-    .nav {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+        .nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .nav a {
-        color: #e50914;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: bold;
-        transition: all 0.3s;
-    }
+        .nav a {
+            color: #e50914;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
 
-    .nav a:hover {
-        color: #b8070f;
-    }
+        .nav a:hover {
+            color: #b8070f;
+        }
 
-    .booking-summary {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
+        .booking-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
 
-    .movie-info {
-        background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
+        .movie-info {
+            background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-    .movie-info h3 {
-        margin-bottom: 15px;
-        font-size: 24px;
-    }
+        .movie-info h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
 
-    .movie-info p {
-        margin: 8px 0;
-        font-size: 16px;
-    }
+        .movie-info p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
 
-    .ticket-details {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        border-left: 5px solid #e50914;
-    }
+        .ticket-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #e50914;
+        }
 
-    .seat-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin: 15px 0;
-    }
+        .seat-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
 
-    .seat-item {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        border: 2px solid #ddd;
-        text-align: center;
-    }
+        .seat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            text-align: center;
+        }
 
-    .seat-item.vip {
-        border-color: #ffc107;
-        background: #fff8dc;
-    }
+        .seat-item.vip {
+            border-color: #ffc107;
+            background: #fff8dc;
+        }
 
-    .seat-item.sweetbox {
-        border-color: #e50914;
-        background: #ffe6e6;
-    }
+        .seat-item.sweetbox {
+            border-color: #e50914;
+            background: #ffe6e6;
+        }
 
-    .seat-item.regular {
-        border-color: #28a745;
-        background: #f0fff0;
-    }
+        .seat-item.regular {
+            border-color: #28a745;
+            background: #f0fff0;
+        }
 
-    .total-section {
-        background: #e50914;
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 30px;
-    }
+        .total-section {
+            background: #e50914;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .total-section h3 {
-        font-size: 28px;
-        margin-bottom: 10px;
-    }
+        .total-section h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
 
-    .payment-section {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
+        .payment-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
 
-    .payment-methods {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-    }
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
 
-    .payment-option {
-        border: 3px solid #ddd;
-        border-radius: 15px;
-        padding: 25px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s;
-        background: white;
-    }
+        .payment-option {
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
 
-    .payment-option:hover {
-        border-color: #e50914;
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(229, 9, 20, 0.2);
-    }
+        .payment-option:hover {
+            border-color: #e50914;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.2);
+        }
 
-    .payment-option.selected {
-        border-color: #e50914;
-        background: #fff5f5;
-    }
+        .payment-option.selected {
+            border-color: #e50914;
+            background: #fff5f5;
+        }
 
-    .payment-option i {
-        font-size: 48px;
-        color: #e50914;
-        margin-bottom: 15px;
-    }
+        .payment-option i {
+            font-size: 48px;
+            color: #e50914;
+            margin-bottom: 15px;
+        }
 
-    .payment-option h4 {
-        color: #333;
-        margin-bottom: 10px;
-        font-size: 20px;
-    }
+        .payment-option h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
 
-    .payment-option p {
-        color: #666;
-        font-size: 14px;
-    }
+        .payment-option p {
+            color: #666;
+            font-size: 14px;
+        }
 
-    .confirm-btn {
-        background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
-        color: white;
-        border: none;
-        padding: 18px 40px;
-        border-radius: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-        width: 100%;
-        margin-top: 20px;
-    }
+        .confirm-btn {
+            background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
 
-    .confirm-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4);
-    }
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4);
+        }
 
-    .confirm-btn:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-        transform: none;
-    }
+        .confirm-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
 
-    .customer-info {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
+        .customer-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-    .customer-info h4 {
-        color: #e50914;
-        margin-bottom: 15px;
-    }
+        .customer-info h4 {
+            color: #e50914;
+            margin-bottom: 15px;
+        }
 
-    .info-row {
-        display: flex;
-        justify-content: space-between;
-        margin: 10px 0;
-        padding: 8px 0;
-        border-bottom: 1px solid #eee;
-    }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
 
-    .back-btn {
-        background: #6c757d;
-        color: white;
-        border: none;
-        padding: 12px 25px;
-        border-radius: 8px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        margin-right: 15px;
-        transition: all 0.3s;
-    }
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 15px;
+            transition: all 0.3s;
+        }
 
-    .back-btn:hover {
-        background: #5a6268;
-        color: white;
-        text-decoration: none;
-    }
+        .back-btn:hover {
+            background: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
 
-    .error-message {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border: 1px solid #f5c6cb;
-        display: none;
-    }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
     </style>
 </head>
 
@@ -372,10 +372,10 @@ foreach ($seats as $seat) {
                 <h4><i class="fas fa-chair"></i> Chi tiết ghế đã chọn</h4>
                 <div class="seat-list">
                     <?php foreach ($seat_details as $seat): ?>
-                    <div class="seat-item <?php echo $seat['type']; ?>">
-                        <div style="font-weight: bold; font-size: 18px;"><?php echo $seat['seat']; ?></div>
-                        <div style="margin: 5px 0;">
-                            <?php
+                        <div class="seat-item <?php echo $seat['type']; ?>">
+                            <div style="font-weight: bold; font-size: 18px;"><?php echo $seat['seat']; ?></div>
+                            <div style="margin: 5px 0;">
+                                <?php
                                 $type_names = [
                                     'regular' => 'Ghế thường',
                                     'vip' => 'Ghế VIP',
@@ -383,18 +383,47 @@ foreach ($seats as $seat) {
                                 ];
                                 echo $type_names[$seat['type']];
                                 ?>
+                            </div>
+                            <div style="color: #e50914; font-weight: bold;">
+                                <?php echo number_format($seat['price'], 0, ',', '.'); ?>đ
+                            </div>
                         </div>
-                        <div style="color: #e50914; font-weight: bold;">
-                            <?php echo number_format($seat['price'], 0, ',', '.'); ?>đ
-                        </div>
-                    </div>
                     <?php endforeach; ?>
                 </div>
             </div>
 
+            <!-- Voucher Section -->
+            <div class="voucher-section"
+                style="background: #fff5e6; border: 2px dashed #ff9800; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h4><i class="fas fa-tag"></i> Mã giảm giá</h4>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <input type="text" id="voucherCode" class="form-control"
+                        placeholder="Nhập mã voucher (VD: WELCOME2025)"
+                        style="flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px;">
+                    <button type="button" id="applyVoucherBtn" class="btn-apply-voucher"
+                        style="padding: 12px 30px; background: #ff9800; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                        Áp dụng
+                    </button>
+                </div>
+                <div id="voucherMessage" style="margin-top: 10px; display: none;"></div>
+            </div>
+
             <!-- Total -->
             <div class="total-section">
-                <h3>Tổng tiền: <?php echo number_format($total_price, 0, ',', '.'); ?>đ</h3>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>Tổng tiền vé:</span>
+                    <span id="originalPrice"><?php echo number_format($total_price, 0, ',', '.'); ?>đ</span>
+                </div>
+                <div id="discountRow"
+                    style="display: none; justify-content: space-between; margin-bottom: 10px; color: #28a745;">
+                    <span><i class="fas fa-tag"></i> Giảm giá:</span>
+                    <span id="discountAmount">0đ</span>
+                </div>
+                <hr style="margin: 10px 0;">
+                <h3 style="display: flex; justify-content: space-between;">
+                    <span>Tổng thanh toán:</span>
+                    <span id="finalPrice"><?php echo number_format($total_price, 0, ',', '.'); ?>đ</span>
+                </h3>
                 <p><?php echo count($seat_details); ?> ghế đã chọn</p>
             </div>
         </div>
@@ -411,7 +440,10 @@ foreach ($seats as $seat) {
                 <input type="hidden" name="movie_id" value="<?php echo $booking_data['movie_id']; ?>">
                 <input type="hidden" name="showtime_id" value="<?php echo $booking_data['showtime_id']; ?>">
                 <input type="hidden" name="seats" value="<?php echo htmlspecialchars($booking_data['seats']); ?>">
-                <input type="hidden" name="total_price" value="<?php echo $total_price; ?>">
+                <input type="hidden" name="total_price" id="hiddenTotalPrice" value="<?php echo $total_price; ?>">
+                <input type="hidden" name="voucher_id" id="hiddenVoucherId" value="">
+                <input type="hidden" name="discount_amount" id="hiddenDiscountAmount" value="0">
+                <input type="hidden" name="final_price" id="hiddenFinalPrice" value="<?php echo $total_price; ?>">
 
                 <div class="payment-methods">
                     <!-- Thanh toán tại quầy -->
@@ -472,64 +504,179 @@ foreach ($seats as $seat) {
     </div>
 
     <script>
-    let selectedPaymentMethod = null;
+        let selectedPaymentMethod = null;
+        let appliedVoucher = null;
+        const originalPrice = <?php echo $total_price; ?>;
 
-    // Xử lý chọn phương thức thanh toán
-    document.querySelectorAll('.payment-option').forEach(option => {
-        option.addEventListener('click', function() {
-            // Bỏ chọn tất cả
-            document.querySelectorAll('.payment-option').forEach(opt => {
-                opt.classList.remove('selected');
-                opt.querySelector('input[type="radio"]').checked = false;
-            });
-
-            // Chọn option hiện tại
-            this.classList.add('selected');
-            this.querySelector('input[type="radio"]').checked = true;
-            selectedPaymentMethod = this.getAttribute('data-method');
-
-            // Cập nhật nút xác nhận
-            updateConfirmButton();
-        });
-    });
-
-    function updateConfirmButton() {
-        const btn = document.getElementById('confirmPaymentBtn');
-        if (selectedPaymentMethod) {
-            btn.disabled = false;
-            if (selectedPaymentMethod === 'counter') {
-                btn.innerHTML = '<i class="fas fa-store"></i> Xác nhận - Thanh toán tại quầy';
-            } else {
-                btn.innerHTML = '<i class="fas fa-credit-card"></i> Thanh toán qua VNPay';
+        // Xử lý áp dụng voucher
+        document.getElementById('applyVoucherBtn').addEventListener('click', function() {
+            // Nếu đã có voucher áp dụng, thực hiện hủy
+            if (appliedVoucher) {
+                removeVoucher();
+                return;
             }
-        } else {
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-check"></i> Chọn phương thức thanh toán';
+
+            const code = document.getElementById('voucherCode').value.trim().toUpperCase();
+            const messageDiv = document.getElementById('voucherMessage');
+
+            if (!code) {
+                showVoucherMessage('Vui lòng nhập mã voucher!', 'error');
+                return;
+            }
+
+            // Hiển thị loading
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang kiểm tra...';
+
+            // AJAX call
+            fetch('api_check_voucher.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `code=${encodeURIComponent(code)}&total_price=${originalPrice}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        appliedVoucher = data;
+                        updatePriceDisplay(data.discount_amount, data.final_price);
+                        showVoucherMessage(`✓ ${data.message} - Giảm ${data.discount_formatted}`, 'success');
+
+                        // Cập nhật hidden inputs
+                        document.getElementById('hiddenVoucherId').value = data.voucher.id;
+                        document.getElementById('hiddenDiscountAmount').value = data.discount_amount;
+                        document.getElementById('hiddenFinalPrice').value = data.final_price;
+
+                        // Disable input sau khi áp dụng
+                        document.getElementById('voucherCode').disabled = true;
+                        this.innerHTML = '<i class="fas fa-times"></i> Hủy';
+                    } else {
+                        showVoucherMessage('✗ ' + data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    showVoucherMessage('Lỗi kết nối! Vui lòng thử lại.', 'error');
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    this.disabled = false;
+                    if (!appliedVoucher) {
+                        this.innerHTML = 'Áp dụng';
+                    }
+                });
+        });
+
+        function removeVoucher() {
+            appliedVoucher = null;
+            updatePriceDisplay(0, originalPrice);
+            document.getElementById('voucherCode').value = '';
+            document.getElementById('voucherCode').disabled = false;
+            document.getElementById('hiddenVoucherId').value = '';
+            document.getElementById('hiddenDiscountAmount').value = '0';
+            document.getElementById('hiddenFinalPrice').value = originalPrice;
+
+            const btn = document.getElementById('applyVoucherBtn');
+            btn.innerHTML = 'Áp dụng';
+
+            showVoucherMessage('Đã hủy voucher', 'info');
+            setTimeout(() => {
+                document.getElementById('voucherMessage').style.display = 'none';
+            }, 2000);
         }
-    }
 
-    function confirmPayment() {
-        if (!selectedPaymentMethod) {
-            showError('Vui lòng chọn phương thức thanh toán!');
-            return;
+        function updatePriceDisplay(discount, finalPrice) {
+            if (discount > 0) {
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discountAmount').textContent = '-' + new Intl.NumberFormat('vi-VN').format(
+                    discount) + 'đ';
+            } else {
+                document.getElementById('discountRow').style.display = 'none';
+            }
+
+            document.getElementById('finalPrice').textContent = new Intl.NumberFormat('vi-VN').format(finalPrice) + 'đ';
+            document.getElementById('hiddenTotalPrice').value = finalPrice;
         }
 
-        // Submit form
-        document.getElementById('paymentForm').submit();
-    }
+        function showVoucherMessage(message, type) {
+            const messageDiv = document.getElementById('voucherMessage');
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            messageDiv.style.padding = '10px';
+            messageDiv.style.borderRadius = '5px';
+            messageDiv.style.fontWeight = 'bold';
 
-    function showError(message) {
-        const errorDiv = document.getElementById('errorMessage');
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
+            if (type === 'success') {
+                messageDiv.style.background = '#d4edda';
+                messageDiv.style.color = '#155724';
+                messageDiv.style.border = '1px solid #c3e6cb';
+            } else if (type === 'error') {
+                messageDiv.style.background = '#f8d7da';
+                messageDiv.style.color = '#721c24';
+                messageDiv.style.border = '1px solid #f5c6cb';
+            } else {
+                messageDiv.style.background = '#d1ecf1';
+                messageDiv.style.color = '#0c5460';
+                messageDiv.style.border = '1px solid #bee5eb';
+            }
+        }
 
-        setTimeout(() => {
-            errorDiv.style.display = 'none';
-        }, 5000);
-    }
+        // Xử lý chọn phương thức thanh toán
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Bỏ chọn tất cả
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    opt.querySelector('input[type="radio"]').checked = false;
+                });
 
-    // Khởi tạo nút
-    updateConfirmButton();
+                // Chọn option hiện tại
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+                selectedPaymentMethod = this.getAttribute('data-method');
+
+                // Cập nhật nút xác nhận
+                updateConfirmButton();
+            });
+        });
+
+        function updateConfirmButton() {
+            const btn = document.getElementById('confirmPaymentBtn');
+            if (selectedPaymentMethod) {
+                btn.disabled = false;
+                if (selectedPaymentMethod === 'counter') {
+                    btn.innerHTML = '<i class="fas fa-store"></i> Xác nhận - Thanh toán tại quầy';
+                } else {
+                    btn.innerHTML = '<i class="fas fa-credit-card"></i> Thanh toán qua VNPay';
+                }
+            } else {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-check"></i> Chọn phương thức thanh toán';
+            }
+        }
+
+        function confirmPayment() {
+            if (!selectedPaymentMethod) {
+                showError('Vui lòng chọn phương thức thanh toán!');
+                return;
+            }
+
+            // Submit form
+            document.getElementById('paymentForm').submit();
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Khởi tạo nút
+        updateConfirmButton();
     </script>
 </body>
 

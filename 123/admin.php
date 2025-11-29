@@ -14,95 +14,108 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 <head>
     <meta charset="UTF-8" />
     <title>Quản trị hệ thống CGV</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        .admin-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    .admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-        .welcome-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            text-align: center;
-        }
+    .welcome-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        text-align: center;
+    }
 
-        .admin-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-        }
+    .admin-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+    }
 
-        .admin-card:hover {
-            transform: translateY(-5px);
-        }
+    .admin-card:hover {
+        transform: translateY(-5px);
+    }
 
-        .feature-btn {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+    .feature-btn {
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
 
-        .btn-movies {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-        }
+    .btn-movies {
+        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        color: white;
+    }
 
-        .btn-showtimes {
-            background: linear-gradient(45deg, #4834d4, #686de0);
-            color: white;
-        }
+    .btn-showtimes {
+        background: linear-gradient(45deg, #4834d4, #686de0);
+        color: white;
+    }
 
-        .btn-tickets {
-            background: linear-gradient(45deg, #00d2d3, #01a3a4);
-            color: white;
-        }
+    .btn-tickets {
+        background: linear-gradient(45deg, #00d2d3, #01a3a4);
+        color: white;
+    }
 
-        .btn-users {
-            background: linear-gradient(45deg, #feca57, #ff9ff3);
-            color: white;
-        }
+    .btn-users {
+        background: linear-gradient(45deg, #feca57, #ff9ff3);
+        color: white;
+    }
 
-        .btn-stats {
-            background: linear-gradient(45deg, #48dbfb, #0abde3);
-            color: white;
-        }
+    .btn-stats {
+        background: linear-gradient(45deg, #48dbfb, #0abde3);
+        color: white;
+    }
 
-        .btn-logout {
-            background: linear-gradient(45deg, #ff3838, #ff4757);
-            color: white;
-        }
+    .btn-logout {
+        background: linear-gradient(45deg, #ff3838, #ff4757);
+        color: white;
+    }
 
-        .feature-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            color: white;
-            text-decoration: none;
-        }
+    .btn-vouchers {
+        background: linear-gradient(45deg, #e50914, #b8070f);
+        color: white;
+    }
+
+    .btn-members {
+        background: linear-gradient(45deg, #ffd700, #ff8c00);
+        color: white;
+    }
+
+    .btn-cinemas {
+        background: linear-gradient(45deg, #20bf6b, #26de81);
+        color: white;
+    }
+
+    .feature-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        color: white;
+        text-decoration: none;
+    }
     </style>
 </head>
 
@@ -112,7 +125,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
             <h1><i class="bi bi-shield-check"></i> Chào mừng đến Admin CGV</h1>
             <p class="lead">Hệ thống quản trị rạp chiếu phim</p>
             <hr>
-            <p>Xin chào <strong><?php echo $_SESSION['username']; ?></strong>! Quản lý toàn bộ hoạt động của hệ thống CGV</p>
+            <p>Xin chào <strong><?php echo $_SESSION['username']; ?></strong>! Quản lý toàn bộ hoạt động của hệ thống
+                CGV</p>
         </div>
 
         <div class="row">
@@ -167,6 +181,28 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                     <p>Xem thông tin khách hàng</p>
                     <a href="admin_users.php" class="feature-btn btn-users">
                         <i class="bi bi-person-lines-fill"></i> Danh Sách Khách Hàng
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quản lý Voucher -->
+            <div class="col-md-6 col-lg-4">
+                <div class="admin-card">
+                    <h4><i class="bi bi-tag-fill"></i> Quản lý Voucher</h4>
+                    <p>Tạo và quản lý mã giảm giá</p>
+                    <a href="admin_vouchers.php" class="feature-btn btn-vouchers">
+                        <i class="bi bi-tag"></i> Quản Lý Voucher
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quản lý Thành Viên -->
+            <div class="col-md-6 col-lg-4">
+                <div class="admin-card">
+                    <h4><i class="bi bi-trophy"></i> Hạng Thành Viên</h4>
+                    <p>Quản lý hạng và điểm thành viên</p>
+                    <a href="admin_members.php" class="feature-btn btn-members">
+                        <i class="bi bi-award"></i> Quản Lý Thành Viên
                     </a>
                 </div>
             </div>
