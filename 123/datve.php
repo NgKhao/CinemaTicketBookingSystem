@@ -57,6 +57,11 @@ if ($selected_movie_id) {
 $stmt = $pdo->prepare("SELECT id, title FROM movies ORDER BY title");
 $stmt->execute();
 $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Thiết lập biến cho header component
+$isLoggedIn = true;
+$username = $_SESSION['username'];
+$userRole = $_SESSION['role'] ?? 'member';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -66,6 +71,7 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGV - Đặt Vé</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="ASST1.css">
     <link rel="icon" href="./img/4.png">
 
     <style>
@@ -81,45 +87,31 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
             min-height: 100vh;
         }
 
-        .container {
+        .page-content {
+            padding: 20px 0;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            background: #e50914;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
-        }
-
-        .nav {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .nav a {
-            color: #e50914;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .nav a:hover {
-            color: #b8070f;
         }
 
         .booking-section {
             background: white;
             border-radius: 15px;
             padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .booking-section:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .booking-section h3 {
+            color: #e50914;
+            font-size: 24px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
         }
 
         .movie-info {
@@ -141,48 +133,87 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+            margin-bottom: 10px;
+            font-weight: 600;
             color: #333;
+            font-size: 15px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #e50914;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
             border-color: #e50914;
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.1);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover {
+            border-color: #c0c0c0;
         }
 
         .showtimes-container {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .showtimes-container h4 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px;
         }
 
         .showtimes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .showtime-card {
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            padding: 15px;
-            transition: all 0.3s;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
             cursor: pointer;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showtime-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #e50914 0%, #ff6b6b 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .showtime-card:hover::before,
+        .showtime-card.selected::before {
+            transform: scaleX(1);
         }
 
         .showtime-card.selected {
@@ -200,8 +231,20 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
             background: white;
             border-radius: 15px;
             padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .cinema-section:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .cinema-section h3 {
+            color: #e50914;
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
         .screen {
@@ -238,18 +281,37 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .seat {
-            width: 35px;
-            height: 35px;
+            width: 38px;
+            height: 38px;
             border: 2px solid #ddd;
             background: #f8f9fa;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-            font-weight: bold;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 11px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+        }
+
+        .seat::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(229, 9, 20, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .seat:hover::after {
+            width: 100%;
+            height: 100%;
         }
 
         .seat.regular {
@@ -310,11 +372,13 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .booking-summary {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 5px solid #e50914;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid #ffe0e0;
+            box-shadow: 0 4px 6px rgba(229, 9, 20, 0.1);
+
         }
 
         .booking-summary h4 {
@@ -337,17 +401,38 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .confirm-btn {
-            background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
+            background: linear-gradient(135deg, #e50914 0%, #c9070f 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
+            padding: 18px 40px;
+            border-radius: 12px;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             width: 100%;
-            margin-bottom: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confirm-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .confirm-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .confirm-btn:hover {
@@ -388,21 +473,13 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1><i class="fas fa-film"></i> CGV - Đặt Vé Xem Phim</h1>
-            <p>Chào mừng <?php echo $_SESSION['username']; ?> đến với hệ thống đặt vé CGV</p>
-        </div>
+    <?php
+    // Include header component chung
+    include 'header_user.php';
+    ?>
 
-        <!-- Navigation -->
-        <div class="nav">
-            <a href="index.php"><i class="fas fa-home"></i> Trang chủ</a>
-            <a href="movies.php"><i class="fas fa-film"></i> Phim</a>
-            <a href="list_cgv.php"><i class="fas fa-building"></i> Rạp CGV</a>
-            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-        </div>
-
+    <!-- Page Content Wrapper -->
+    <div class="page-content">
         <!-- Movie Information -->
         <?php if ($selected_showtime): ?>
             <div class="movie-info">
@@ -787,6 +864,7 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
             updateBookingSummary();
         });
     </script>
+    </div>
 </body>
 
 </html>

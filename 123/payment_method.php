@@ -57,6 +57,11 @@ foreach ($seats as $seat) {
         'price' => $price
     ];
 }
+
+// Thiết lập biến cho header component
+$isLoggedIn = true;
+$username = $_SESSION['username'];
+$userRole = $_SESSION['role'] ?? 'member';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -66,6 +71,7 @@ foreach ($seats as $seat) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGV - Chọn phương thức thanh toán</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="ASST1.css">
     <link rel="icon" href="./img/4.png">
 
     <style>
@@ -81,45 +87,38 @@ foreach ($seats as $seat) {
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 900px;
+        .page-content {
+            padding: 20px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            background: #e50914;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
-        }
-
-        .nav {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .nav a {
-            color: #e50914;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .nav a:hover {
-            color: #b8070f;
         }
 
         .booking-summary {
             background: white;
             border-radius: 15px;
             padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .booking-summary:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .booking-summary h3 {
+
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .booking-summary h4 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px;
         }
 
         .movie-info {
@@ -141,11 +140,18 @@ foreach ($seats as $seat) {
         }
 
         .ticket-details {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid #e50914;
+            box-shadow: 0 2px 8px rgba(229, 9, 20, 0.1);
+        }
+
+        .ticket-details h4 {
+            color: #e50914;
+            font-size: 18px;
             margin-bottom: 20px;
-            border-left: 5px solid #e50914;
         }
 
         .seat-list {
@@ -179,13 +185,17 @@ foreach ($seats as $seat) {
         }
 
         .total-section {
-            background: #e50914;
+            background: linear-gradient(135deg, #e50914 0%, #c9070f 100%);
             color: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 15px;
             text-align: center;
             margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+
 
         .total-section h3 {
             font-size: 28px;
@@ -196,8 +206,22 @@ foreach ($seats as $seat) {
             background: white;
             border-radius: 15px;
             padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .payment-section:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .payment-section h3 {
+            color: #e50914;
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
         }
 
         .payment-methods {
@@ -208,13 +232,31 @@ foreach ($seats as $seat) {
         }
 
         .payment-option {
-            border: 3px solid #ddd;
+            border: 2px solid #e0e0e0;
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            background: white;
+            transition: all 0.3s ease;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(229, 9, 20, 0.05) 0%, rgba(229, 9, 20, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .payment-option:hover::before {
+            opacity: 1;
         }
 
         .payment-option:hover {
@@ -271,10 +313,11 @@ foreach ($seats as $seat) {
         }
 
         .customer-info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
         }
 
         .customer-info h4 {
@@ -322,20 +365,13 @@ foreach ($seats as $seat) {
 </head>
 
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1><i class="fas fa-credit-card"></i> Chọn phương thức thanh toán</h1>
-            <p>Hoàn tất đặt vé xem phim tại CGV</p>
-        </div>
+    <?php
+    // Include header component chung
+    include 'header_user.php';
+    ?>
 
-        <!-- Navigation -->
-        <div class="nav">
-            <a href="index.php"><i class="fas fa-home"></i> Trang chủ</a>
-            <a href="datve.php"><i class="fas fa-arrow-left"></i> Quay lại đặt vé</a>
-            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-        </div>
-
+    <!-- Page Content Wrapper -->
+    <div class="page-content">
         <!-- Booking Summary -->
         <div class="booking-summary">
             <h3><i class="fas fa-ticket-alt"></i> Thông tin đặt vé</h3>
@@ -678,6 +714,10 @@ foreach ($seats as $seat) {
         // Khởi tạo nút
         updateConfirmButton();
     </script>
+    </div>
+    <!-- End Page Content -->
+    </div>
+    <!-- End Container -->
 </body>
 
 </html>

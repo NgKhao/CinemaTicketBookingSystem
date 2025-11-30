@@ -117,6 +117,11 @@ function getTierBadge($tier_name)
     ];
     return $badges[$tier_name] ?? 'bronze';
 }
+
+// Thiết lập biến cho header component
+$isLoggedIn = true;
+$username = $user['username'];
+$userRole = $user['role'] ?? 'member';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -126,6 +131,7 @@ function getTierBadge($tier_name)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông tin thành viên - CGV</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="ASST1.css">
     <link rel="icon" href="./img/4.png">
     <style>
         * {
@@ -138,63 +144,62 @@ function getTierBadge($tier_name)
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            padding: 20px;
         }
 
-        .container {
-            max-width: 1200px;
+        .page-content {
+            padding: 20px 0;
+            max-width: 1400px;
             margin: 0 auto;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
-        }
-
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .nav {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .nav a {
-            color: #e50914;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .nav a:hover {
-            color: #b8070f;
         }
 
         .profile-grid {
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 30px;
-            margin-bottom: 30px;
+            margin: 20px 0 30px 0;
         }
 
         .card {
             background: white;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
         }
 
         .tier-card {
             text-align: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .tier-badge {
@@ -272,10 +277,37 @@ function getTierBadge($tier_name)
 
         .stat-item {
             text-align: center;
-            padding: 20px;
+            padding: 25px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
+            border-radius: 15px;
             color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .stat-item:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         .stat-value {
@@ -501,21 +533,13 @@ function getTierBadge($tier_name)
 </head>
 
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1><i class="fas fa-user-circle"></i> Thông tin thành viên CGV</h1>
-            <p>Xin chào, <?php echo htmlspecialchars($user['username']); ?>!</p>
-        </div>
+    <?php
+    // Include header component chung
+    include 'header_user.php';
+    ?>
 
-        <!-- Navigation -->
-        <div class="nav">
-            <a href="index.php"><i class="fas fa-home"></i> Trang chủ</a>
-            <a href="datve.php"><i class="fas fa-ticket-alt"></i> Đặt vé</a>
-            <a href="movies.php"><i class="fas fa-film"></i> Phim</a>
-            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-        </div>
-
+    <!-- Page Content Wrapper -->
+    <div class="page-content">
         <!-- Profile Grid -->
         <div class="profile-grid">
             <!-- Tier Card -->
@@ -745,6 +769,9 @@ function getTierBadge($tier_name)
             <?php endif; ?>
         </div>
     </div>
+    <!-- End Page Content -->
+    </div>
+    <!-- End Container -->
 </body>
 
 </html>
