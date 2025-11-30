@@ -135,7 +135,7 @@ $total_revenue = $stmt->fetchColumn() ?: 0;
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         body {
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -147,123 +147,79 @@ $total_revenue = $stmt->fetchColumn() ?: 0;
 
         .admin-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            border: 1px solid #e0e0e0;
-        }
-
-        .page-header {
-            background: #2c3e50;
-            color: white;
-            padding: 20px 25px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .page-header h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 600;
-        }
-
-        .breadcrumb {
-            background: transparent;
-            padding: 10px 0 0 0;
-            margin: 0;
-        }
-
-        .breadcrumb a {
-            color: #ecf0f1;
-            text-decoration: none;
-        }
-
-        .breadcrumb-item.active {
-            color: #bdc3c7;
         }
 
         .stats-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
             text-align: center;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
-            transition: border-color 0.3s;
+            color: white;
         }
 
-        .stats-card:hover {
-            border-color: #3498db;
+        .stats-movies {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
         }
 
-        .stats-card i {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
+        .stats-customers {
+            background: linear-gradient(45deg, #4834d4, #686de0);
         }
 
-        .stats-card h3 {
-            font-size: 32px;
-            font-weight: bold;
-            margin: 10px 0;
-            color: #2c3e50;
+        .stats-bookings {
+            background: linear-gradient(45deg, #00d2d3, #01a3a4);
         }
 
-        .stats-card p {
-            color: #7f8c8d;
-            margin: 0;
-            font-size: 14px;
+        .stats-revenue {
+            background: linear-gradient(45deg, #feca57, #ff9ff3);
         }
 
         .filter-section {
-            background: #ecf0f1;
+            background: #f8f9fa;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 20px;
-            border: 1px solid #bdc3c7;
+            border: 1px solid #e9ecef;
         }
 
         .filter-section label {
             font-weight: 600;
-            color: #2c3e50;
+            color: #495057;
             margin-bottom: 5px;
             display: block;
         }
 
-        .filter-section select,
-        .filter-section input {
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            padding: 8px 12px;
-        }
-
         .btn-filter {
-            background-color: #3498db;
+            background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
             border: none;
             padding: 10px 30px;
-            border-radius: 4px;
+            border-radius: 10px;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
 
         .btn-filter:hover {
-            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-reset {
-            background-color: #95a5a6;
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
             color: white;
             border: none;
             padding: 10px 30px;
-            border-radius: 4px;
+            border-radius: 10px;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
 
         .btn-reset:hover {
-            background-color: #7f8c8d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .chart-container {
@@ -271,9 +227,8 @@ $total_revenue = $stmt->fetchColumn() ?: 0;
             height: 400px;
             margin: 30px 0;
             padding: 20px;
-            background: #fafafa;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 10px;
         }
 
         .stats-table {
@@ -281,7 +236,7 @@ $total_revenue = $stmt->fetchColumn() ?: 0;
         }
 
         .stats-table th {
-            background-color: #34495e;
+            background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
             font-weight: 600;
             border: none;
@@ -298,41 +253,44 @@ $total_revenue = $stmt->fetchColumn() ?: 0;
         }
 
         .revenue-highlight {
-            color: #27ae60;
+            color: #feca57;
             font-weight: bold;
         }
 
         .section-title {
             font-size: 20px;
             font-weight: 600;
-            color: #2c3e50;
+            color: #495057;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
-        }
-
-        .action-buttons {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .action-buttons .btn {
-            margin: 5px;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: 600;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(to right, #667eea, #764ba2) 1;
         }
 
         .filter-type-active {
-            background-color: #3498db !important;
+            background: linear-gradient(45deg, #667eea, #764ba2) !important;
             color: white !important;
+            border-color: transparent !important;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #667eea;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-primary:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="page-header">
+        <div class="admin-card">
             <h1><i class="bi bi-graph-up"></i> Thống Kê Hệ Thống CGV</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -346,28 +304,28 @@ $total_revenue = $stmt->fetchColumn() ?: 0;
         <div class="row">
             <div class="col-md-3">
                 <div class="stats-card stats-movies">
-                    <i class="bi bi-film" style="font-size: 2rem;"></i>
+                    <i class="bi bi-film" style="font-size: 2.5rem;"></i>
                     <h3><?php echo $total_movies; ?></h3>
                     <p>Tổng số phim</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stats-card stats-customers">
-                    <i class="bi bi-people" style="font-size: 2rem;"></i>
+                    <i class="bi bi-people" style="font-size: 2.5rem;"></i>
                     <h3><?php echo $total_customers; ?></h3>
                     <p>Khách hàng</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stats-card stats-bookings">
-                    <i class="bi bi-ticket-perforated" style="font-size: 2rem;"></i>
+                    <i class="bi bi-ticket-perforated" style="font-size: 2.5rem;"></i>
                     <h3><?php echo $total_bookings; ?></h3>
                     <p>Vé đã đặt</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stats-card stats-revenue">
-                    <i class="bi bi-currency-dollar" style="font-size: 2rem;"></i>
+                    <i class="bi bi-currency-dollar" style="font-size: 2.5rem;"></i>
                     <h3><?php echo number_format($total_revenue / 1000); ?>K</h3>
                     <p>Doanh thu (VNĐ)</p>
                 </div>
@@ -647,17 +605,17 @@ $total_revenue = $stmt->fetchColumn() ?: 0;
             </div>
         </div>
 
-        <div class="action-buttons">
-            <a href="admin.php" class="btn btn-secondary">
+        <div class="admin-card text-center">
+            <a href="admin.php" class="btn btn-secondary me-2">
                 <i class="bi bi-house"></i> Về trang chủ Admin
             </a>
-            <a href="admin_tickets.php" class="btn btn-info">
+            <a href="admin_tickets.php" class="btn btn-info me-2">
                 <i class="bi bi-ticket-perforated"></i> Quản lý vé
             </a>
-            <a href="admin_users.php" class="btn btn-primary">
+            <a href="admin_users.php" class="btn btn-primary me-2">
                 <i class="bi bi-people"></i> Quản lý khách hàng
             </a>
-            <a href="admin_vouchers.php" class="btn btn-success">
+            <a href="admin_vouchers.php" class="btn btn-success me-2">
                 <i class="bi bi-ticket-detailed"></i> Quản lý voucher
             </a>
             <a href="logout.php" class="btn btn-danger">
