@@ -36,120 +36,72 @@ $userRole = $isLoggedIn ? $_SESSION['role'] : '';
 </head>
 
 <body>
-    <div class="container">
-        <marquee>CGV Trần Duy Hưng - Tìm kiếm phim yêu thích của bạn!</marquee>
+    <?php
+    // Include header component chung
+    include 'header_user.php';
+    ?>
 
-        <!-- User Status Bar -->
-        <div class="user-status-bar">
-            <?php if ($isLoggedIn): ?>
-            <div class="user-info">
-                <i class="fas fa-user"></i> Xin chào, <strong><?php echo $username; ?></strong>
-                <?php if ($userRole === 'admin'): ?>
-                <a href="admin.php" class="admin-link"><i class="fas fa-cog"></i> Quản trị</a>
-                <?php endif; ?>
-            </div>
-            <!-- Search Bar -->
-            <div class="search-container">
-                <form method="GET" action="search_movies.php" class="search-form">
-                    <input type="text" name="q" placeholder="Tìm kiếm phim..." class="search-input"
-                        value="<?php echo htmlspecialchars($searchQuery); ?>">
-                    <button type="submit" class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-            </div>
-            <div class="user-actions">
-                <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-            </div>
-            <?php else: ?>
-            <div class="user-actions">
-                <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
-                <a href="register.html" class="register-btn"><i class="fas fa-user-plus"></i> Đăng ký</a>
-            </div>
-            <?php endif; ?>
-        </div>
+    <article>
+        <div class="main-content">
+            <div class="search-results" style="padding: 20px;">
+                <h1 style="color: #e50914; margin-bottom: 20px;">
+                    Kết quả tìm kiếm<?php if (!empty($searchQuery)): ?> cho
+                    "<?php echo htmlspecialchars($searchQuery); ?>"<?php endif; ?>
+                </h1>
 
-        <header></header>
-        <nav>
-            <ul>
-                <li><a href="./index.php">Trang chủ</a></li>
-                <li class="dropdown">
-                    <a href="#"> Phim <i class="fas fa-chevron-down"></i> </a>
-                    <ul class="dropdown-content">
-                        <li><a href="./movies.php?category=1">Phim Hành Động</a></li>
-                        <li><a href="./movies.php?category=2">Phim Tình Cảm</a></li>
-                        <li><a href="./movies.php?category=3">Phim Hoạt Hình</a></li>
-                    </ul>
-                </li>
-                <li><a href="./list_cgv.php">Rạp CGV</a></li>
-                <li><a href="./list_user.html">Thành viên</a></li>
-                <li><a href="./ap.html">Tuyển dụng</a></li>
-            </ul>
-
-
-        </nav>
-
-        <article>
-            <div class="main-content">
-                <div class="search-results" style="padding: 20px;">
-                    <h1 style="color: #e50914; margin-bottom: 20px;">
-                        Kết quả tìm kiếm<?php if (!empty($searchQuery)): ?> cho
-                        "<?php echo htmlspecialchars($searchQuery); ?>"<?php endif; ?>
-                    </h1>
-
-                    <?php if (empty($searchQuery)): ?>
+                <?php if (empty($searchQuery)): ?>
                     <div style="text-align: center; padding: 50px;">
                         <i class="fas fa-search" style="font-size: 3em; color: #ddd; margin-bottom: 20px;"></i>
                         <p style="font-size: 1.2em; color: #666;">Nhập từ khóa để tìm kiếm phim</p>
                     </div>
-                    <?php elseif (empty($movies)): ?>
+                <?php elseif (empty($movies)): ?>
                     <div style="text-align: center; padding: 50px;">
                         <i class="fas fa-film" style="font-size: 3em; color: #ddd; margin-bottom: 20px;"></i>
                         <p style="font-size: 1.2em; color: #666;">Không tìm thấy phim nào phù hợp với từ khóa
                             "<?php echo htmlspecialchars($searchQuery); ?>"</p>
                         <p style="color: #999;">Hãy thử tìm kiếm với từ khóa khác</p>
                     </div>
-                    <?php else: ?>
+                <?php else: ?>
                     <p style="margin-bottom: 30px; color: #666;">
                         Tìm thấy <strong><?php echo count($movies); ?></strong> kết quả
                     </p>
 
                     <div class="movie-grid">
                         <?php foreach ($movies as $movie): ?>
-                        <div class="movie-card">
-                            <img src="<?php echo $movie['image']; ?>" alt="<?php echo $movie['title']; ?>" />
-                            <h3><?php echo $movie['title']; ?></h3>
-                            <p><strong>Thể loại:</strong> <?php echo $movie['genre']; ?></p>
-                            <p><strong>Thời lượng:</strong> <?php echo $movie['duration']; ?></p>
-                            <p><strong>Khởi chiếu:</strong>
-                                <?php echo date('d/m/Y', strtotime($movie['release_date'])); ?></p>
-                            <div class="movie-buttons">
-                                <button onclick="window.location.href='movie_detail.php?id=<?php echo $movie['id']; ?>'"
-                                    class="btn-detail">
-                                    <i class="fas fa-eye"></i> Chi tiết
-                                </button>
-                                <?php if ($isLoggedIn): ?>
-                                <button onclick="window.location.href='datve.php?movie_id=<?php echo $movie['id']; ?>'"
-                                    class="btn-booking">
-                                    <i class="fas fa-ticket-alt"></i> Đặt vé
-                                </button>
-                                <?php else: ?>
-                                <button onclick="window.location.href='login.html'" class="btn-login">
-                                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
-                                </button>
-                                <?php endif; ?>
+                            <div class="movie-card">
+                                <img src="<?php echo $movie['image']; ?>" alt="<?php echo $movie['title']; ?>" />
+                                <h3><?php echo $movie['title']; ?></h3>
+                                <p><strong>Thể loại:</strong> <?php echo $movie['genre']; ?></p>
+                                <p><strong>Thời lượng:</strong> <?php echo $movie['duration']; ?></p>
+                                <p><strong>Khởi chiếu:</strong>
+                                    <?php echo date('d/m/Y', strtotime($movie['release_date'])); ?></p>
+                                <div class="movie-buttons">
+                                    <button onclick="window.location.href='movie_detail.php?id=<?php echo $movie['id']; ?>'"
+                                        class="btn-detail">
+                                        <i class="fas fa-eye"></i> Chi tiết
+                                    </button>
+                                    <?php if ($isLoggedIn): ?>
+                                        <button onclick="window.location.href='datve.php?movie_id=<?php echo $movie['id']; ?>'"
+                                            class="btn-booking">
+                                            <i class="fas fa-ticket-alt"></i> Đặt vé
+                                        </button>
+                                    <?php else: ?>
+                                        <button onclick="window.location.href='login.html'" class="btn-login">
+                                            <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        </div>
                         <?php endforeach; ?>
                     </div>
-                    <?php endif; ?>
-                </div>
+                <?php endif; ?>
             </div>
-        </article>
+        </div>
+    </article>
 
-        <footer>
-            <span>Chăm sóc khách hàng: 1900 6017</span>
-        </footer>
+    <footer>
+        <span>Chăm sóc khách hàng: 1900 6017</span>
+    </footer>
     </div>
 </body>
 

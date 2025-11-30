@@ -69,321 +69,321 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="icon" href="./img/4.png">
 
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    .header {
-        background: #e50914;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
-    }
+        .header {
+            background: #e50914;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+        }
 
-    .nav {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+        .nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .nav a {
-        color: #e50914;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: bold;
-        transition: all 0.3s;
-    }
+        .nav a {
+            color: #e50914;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
 
-    .nav a:hover {
-        color: #b8070f;
-    }
+        .nav a:hover {
+            color: #b8070f;
+        }
 
-    .booking-section {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
+        .booking-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
 
-    .movie-info {
-        background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
+        .movie-info {
+            background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-    .movie-info h3 {
-        margin-bottom: 10px;
-        font-size: 24px;
-    }
+        .movie-info h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
 
-    .movie-info p {
-        margin: 5px 0;
-        font-size: 16px;
-    }
+        .movie-info p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
 
-    .form-group {
-        margin-bottom: 20px;
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: #333;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
 
-    .form-group input,
-    .form-group select {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: border-color 0.3s;
-    }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
 
-    .form-group input:focus,
-    .form-group select:focus {
-        outline: none;
-        border-color: #e50914;
-    }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e50914;
+        }
 
-    .showtimes-container {
-        margin-bottom: 20px;
-    }
+        .showtimes-container {
+            margin-bottom: 20px;
+        }
 
-    .showtimes-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 15px;
-    }
+        .showtimes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
 
-    .showtime-card {
-        border: 2px solid #ddd;
-        border-radius: 10px;
-        padding: 15px;
-        transition: all 0.3s;
-        cursor: pointer;
-    }
+        .showtime-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
 
-    .showtime-card.selected {
-        border-color: #e50914;
-        background: #fff5f5;
-    }
+        .showtime-card.selected {
+            border-color: #e50914;
+            background: #fff5f5;
+        }
 
-    .showtime-card:hover {
-        border-color: #e50914;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(229, 9, 20, 0.2);
-    }
+        .showtime-card:hover {
+            border-color: #e50914;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.2);
+        }
 
-    .cinema-section {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
+        .cinema-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
 
-    .screen {
-        background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
-        color: white;
-        text-align: center;
-        padding: 15px;
-        margin: 20px auto 30px;
-        width: 80%;
-        border-radius: 10px;
-        font-weight: bold;
-        font-size: 18px;
-        box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
-    }
+        .screen {
+            background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin: 20px auto 30px;
+            width: 80%;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+        }
 
-    .seats-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
+        .seats-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    .seat-row {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 10px;
-        gap: 5px;
-    }
+        .seat-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 5px;
+        }
 
-    .row-label {
-        width: 30px;
-        text-align: center;
-        font-weight: bold;
-        color: #666;
-    }
+        .row-label {
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: #666;
+        }
 
-    .seat {
-        width: 35px;
-        height: 35px;
-        border: 2px solid #ddd;
-        background: #f8f9fa;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.3s;
-        font-size: 12px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .seat {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #ddd;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .seat.regular {
-        border-color: #28a745;
-    }
+        .seat.regular {
+            border-color: #28a745;
+        }
 
-    .seat.vip {
-        border-color: #ffc107;
-        background: #fff8dc;
-    }
+        .seat.vip {
+            border-color: #ffc107;
+            background: #fff8dc;
+        }
 
-    .seat.sweetbox {
-        border-color: #e50914;
-        background: #ffe6e6;
-    }
+        .seat.sweetbox {
+            border-color: #e50914;
+            background: #ffe6e6;
+        }
 
-    .seat.booked {
-        background: #6c757d;
-        color: white;
-        cursor: not-allowed;
-        border-color: #6c757d;
-    }
+        .seat.booked {
+            background: #6c757d;
+            color: white;
+            cursor: not-allowed;
+            border-color: #6c757d;
+        }
 
-    .seat.selected {
-        background: #e50914;
-        color: white;
-        border-color: #e50914;
-        transform: scale(1.1);
-    }
+        .seat.selected {
+            background: #e50914;
+            color: white;
+            border-color: #e50914;
+            transform: scale(1.1);
+        }
 
-    .seat:not(.booked):hover {
-        transform: scale(1.1);
-    }
+        .seat:not(.booked):hover {
+            transform: scale(1.1);
+        }
 
-    .gap {
-        width: 20px;
-    }
+        .gap {
+            width: 20px;
+        }
 
-    .legend {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin: 20px 0;
-        flex-wrap: wrap;
-    }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
 
-    .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .legend-seat {
-        width: 20px;
-        height: 20px;
-        border-radius: 4px;
-        border: 2px solid;
-    }
+        .legend-seat {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid;
+        }
 
-    .booking-summary {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        border-left: 5px solid #e50914;
-    }
+        .booking-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #e50914;
+        }
 
-    .booking-summary h4 {
-        color: #e50914;
-        margin-bottom: 15px;
-    }
+        .booking-summary h4 {
+            color: #e50914;
+            margin-bottom: 15px;
+        }
 
-    .summary-item {
-        display: flex;
-        justify-content: space-between;
-        margin: 10px 0;
-        padding: 8px 0;
-        border-bottom: 1px solid #eee;
-    }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
 
-    .total-price {
-        font-size: 20px;
-        font-weight: bold;
-        color: #e50914;
-    }
+        .total-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e50914;
+        }
 
-    .confirm-btn {
-        background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
-        color: white;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-        width: 100%;
-        margin-bottom: 20px;
-    }
+        .confirm-btn {
+            background: linear-gradient(135deg, #e50914 0%, #b8070f 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-bottom: 20px;
+        }
 
-    .confirm-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4);
-    }
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4);
+        }
 
-    .confirm-btn:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-        transform: none;
-    }
+        .confirm-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
 
-    .error-message {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border: 1px solid #f5c6cb;
-    }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
 
-    .success-message {
-        background: #d4edda;
-        color: #155724;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border: 1px solid #c3e6cb;
-    }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
 
-    .loading {
-        text-align: center;
-        padding: 20px;
-        color: #666;
-    }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
     </style>
 </head>
 
@@ -405,18 +405,18 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Movie Information -->
         <?php if ($selected_showtime): ?>
-        <div class="movie-info">
-            <h3><i class="fas fa-video"></i> <?php echo $selected_showtime['movie_title']; ?></h3>
-            <p><i class="fas fa-tags"></i> <strong>Thể loại:</strong> <?php echo $selected_showtime['genre']; ?></p>
-            <p><i class="fas fa-clock"></i> <strong>Thời lượng:</strong> <?php echo $selected_showtime['duration']; ?>
-            </p>
-        </div>
+            <div class="movie-info">
+                <h3><i class="fas fa-video"></i> <?php echo $selected_showtime['movie_title']; ?></h3>
+                <p><i class="fas fa-tags"></i> <strong>Thể loại:</strong> <?php echo $selected_showtime['genre']; ?></p>
+                <p><i class="fas fa-clock"></i> <strong>Thời lượng:</strong> <?php echo $selected_showtime['duration']; ?>
+                </p>
+            </div>
         <?php elseif ($selected_movie): ?>
-        <div class="movie-info">
-            <h3><i class="fas fa-video"></i> <?php echo $selected_movie['title']; ?></h3>
-            <p><i class="fas fa-tags"></i> <strong>Thể loại:</strong> <?php echo $selected_movie['genre']; ?></p>
-            <p><i class="fas fa-clock"></i> <strong>Thời lượng:</strong> <?php echo $selected_movie['duration']; ?></p>
-        </div>
+            <div class="movie-info">
+                <h3><i class="fas fa-video"></i> <?php echo $selected_movie['title']; ?></h3>
+                <p><i class="fas fa-tags"></i> <strong>Thể loại:</strong> <?php echo $selected_movie['genre']; ?></p>
+                <p><i class="fas fa-clock"></i> <strong>Thời lượng:</strong> <?php echo $selected_movie['duration']; ?></p>
+            </div>
         <?php endif; ?>
 
         <!-- Booking Form -->
@@ -437,48 +437,48 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Movie Selection -->
                 <?php if ($selected_movie_id): ?>
-                <input type="hidden" name="movie_id" value="<?php echo $selected_movie_id; ?>">
+                    <input type="hidden" name="movie_id" value="<?php echo $selected_movie_id; ?>">
                 <?php else: ?>
-                <div class="form-group">
-                    <label for="movie_id"><i class="fas fa-film"></i> Chọn phim</label>
-                    <select id="movie_id" name="movie_id" required>
-                        <option value="">-- Chọn phim --</option>
-                        <?php foreach ($movies as $movie): ?>
-                        <option value="<?php echo $movie['id']; ?>"><?php echo $movie['title']; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="movie_id"><i class="fas fa-film"></i> Chọn phim</label>
+                        <select id="movie_id" name="movie_id" required>
+                            <option value="">-- Chọn phim --</option>
+                            <?php foreach ($movies as $movie): ?>
+                                <option value="<?php echo $movie['id']; ?>"><?php echo $movie['title']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 <?php endif; ?>
 
                 <!-- Showtime Selection -->
                 <?php if (!empty($available_showtimes)): ?>
-                <div class="showtimes-container">
-                    <h4><i class="fas fa-calendar-alt"></i> Chọn suất chiếu</h4>
-                    <div class="showtimes-grid">
-                        <?php foreach ($available_showtimes as $showtime): ?>
-                        <div class="showtime-card" data-showtime-id="<?php echo $showtime['id']; ?>">
-                            <input type="radio" name="showtime_id" value="<?php echo $showtime['id']; ?>"
-                                <?php echo ($selected_showtime_id && $showtime['id'] == $selected_showtime_id) ? 'checked' : ''; ?>
-                                style="display: none;" required>
-                            <div>
-                                <strong><i class="fas fa-building"></i> <?php echo $showtime['cinema_name']; ?></strong>
-                            </div>
-                            <div>
-                                <i class="fas fa-calendar"></i>
-                                <?php echo date('d/m/Y', strtotime($showtime['show_date'])); ?>
-                            </div>
-                            <div>
-                                <i class="fas fa-clock"></i>
-                                <?php echo date('H:i', strtotime($showtime['show_time'])); ?>
-                            </div>
-                            <div>
-                                <i class="fas fa-chair"></i> Còn
-                                <?php echo $showtime['available_seats']; ?>/<?php echo $showtime['total_seats']; ?> ghế
-                            </div>
+                    <div class="showtimes-container">
+                        <h4><i class="fas fa-calendar-alt"></i> Chọn suất chiếu</h4>
+                        <div class="showtimes-grid">
+                            <?php foreach ($available_showtimes as $showtime): ?>
+                                <div class="showtime-card" data-showtime-id="<?php echo $showtime['id']; ?>">
+                                    <input type="radio" name="showtime_id" value="<?php echo $showtime['id']; ?>"
+                                        <?php echo ($selected_showtime_id && $showtime['id'] == $selected_showtime_id) ? 'checked' : ''; ?>
+                                        style="display: none;" required>
+                                    <div>
+                                        <strong><i class="fas fa-building"></i> <?php echo $showtime['cinema_name']; ?></strong>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-calendar"></i>
+                                        <?php echo date('d/m/Y', strtotime($showtime['show_date'])); ?>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-clock"></i>
+                                        <?php echo date('H:i', strtotime($showtime['show_time'])); ?>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-chair"></i> Còn
+                                        <?php echo $showtime['available_seats']; ?>/<?php echo $showtime['total_seats']; ?> ghế
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
-                        <?php endforeach; ?>
                     </div>
-                </div>
                 <?php endif; ?>
 
                 <!-- Hidden input for selected seats -->
@@ -611,181 +611,181 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <script>
-    // Giá vé theo loại ghế
-    const SEAT_PRICES = {
-        'regular': 60000,
-        'vip': 80000,
-        'sweetbox': 120000
-    };
+        // Giá vé theo loại ghế
+        const SEAT_PRICES = {
+            'regular': 60000,
+            'vip': 80000,
+            'sweetbox': 120000
+        };
 
-    // Biến toàn cục
-    let selectedSeats = [];
-    let bookedSeats = [];
-    let selectedShowtimeId = null;
+        // Biến toàn cục
+        let selectedSeats = [];
+        let bookedSeats = [];
+        let selectedShowtimeId = null;
 
-    // Hàm load ghế đã đặt
-    async function loadBookedSeats(showtimeId) {
-        if (!showtimeId) return;
+        // Hàm load ghế đã đặt
+        async function loadBookedSeats(showtimeId) {
+            if (!showtimeId) return;
 
-        try {
-            console.log('Loading booked seats for showtime:', showtimeId);
-            const response = await fetch(`get_booked_seats.php?showtime_id=${showtimeId}`);
-            const data = await response.json();
-            console.log('Booked seats data:', data);
+            try {
+                console.log('Loading booked seats for showtime:', showtimeId);
+                const response = await fetch(`get_booked_seats.php?showtime_id=${showtimeId}`);
+                const data = await response.json();
+                console.log('Booked seats data:', data);
 
-            bookedSeats = data;
-            updateSeatDisplay();
-        } catch (error) {
-            console.error('Error loading booked seats:', error);
-        }
-    }
-
-    // Hàm cập nhật hiển thị ghế
-    function updateSeatDisplay() {
-        // Reset tất cả ghế
-        document.querySelectorAll('.seat').forEach(seat => {
-            seat.classList.remove('booked');
-        });
-
-        // Đánh dấu ghế đã đặt
-        bookedSeats.forEach(seatNumber => {
-            const seat = document.querySelector(`[data-seat="${seatNumber}"]`);
-            if (seat) {
-                seat.classList.add('booked');
+                bookedSeats = data;
+                updateSeatDisplay();
+            } catch (error) {
+                console.error('Error loading booked seats:', error);
             }
-        });
+        }
 
-        console.log('Updated seat display, booked seats:', bookedSeats);
-    }
+        // Hàm cập nhật hiển thị ghế
+        function updateSeatDisplay() {
+            // Reset tất cả ghế
+            document.querySelectorAll('.seat').forEach(seat => {
+                seat.classList.remove('booked');
+            });
 
-    // Hàm cập nhật tổng kết đặt vé
-    function updateBookingSummary() {
-        const seatCount = selectedSeats.length;
-        let totalPrice = 0;
+            // Đánh dấu ghế đã đặt
+            bookedSeats.forEach(seatNumber => {
+                const seat = document.querySelector(`[data-seat="${seatNumber}"]`);
+                if (seat) {
+                    seat.classList.add('booked');
+                }
+            });
 
-        selectedSeats.forEach(seatId => {
-            const seat = document.querySelector(`[data-seat="${seatId}"]`);
-            if (seat.classList.contains('vip')) {
-                totalPrice += SEAT_PRICES.vip;
-            } else if (seat.classList.contains('sweetbox')) {
-                totalPrice += SEAT_PRICES.sweetbox;
+            console.log('Updated seat display, booked seats:', bookedSeats);
+        }
+
+        // Hàm cập nhật tổng kết đặt vé
+        function updateBookingSummary() {
+            const seatCount = selectedSeats.length;
+            let totalPrice = 0;
+
+            selectedSeats.forEach(seatId => {
+                const seat = document.querySelector(`[data-seat="${seatId}"]`);
+                if (seat.classList.contains('vip')) {
+                    totalPrice += SEAT_PRICES.vip;
+                } else if (seat.classList.contains('sweetbox')) {
+                    totalPrice += SEAT_PRICES.sweetbox;
+                } else {
+                    totalPrice += SEAT_PRICES.regular;
+                }
+            });
+
+            document.getElementById('selectedSeatsDisplay').textContent =
+                selectedSeats.length > 0 ? selectedSeats.join(', ') : 'Chưa chọn';
+            document.getElementById('seatCount').textContent = seatCount;
+            document.getElementById('totalPrice').textContent = totalPrice.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('selectedSeats').value = selectedSeats.join(',');
+        }
+
+        // Hàm xử lý chọn ghế
+        function handleSeatClick(event) {
+            const seat = event.target;
+            const seatId = seat.getAttribute('data-seat');
+
+            if (seat.classList.contains('booked')) {
+                return; // Không thể chọn ghế đã đặt
+            }
+
+            if (seat.classList.contains('selected')) {
+                // Bỏ chọn ghế
+                seat.classList.remove('selected');
+                selectedSeats = selectedSeats.filter(id => id !== seatId);
             } else {
-                totalPrice += SEAT_PRICES.regular;
+                // Chọn ghế
+                seat.classList.add('selected');
+                selectedSeats.push(seatId);
             }
-        });
 
-        document.getElementById('selectedSeatsDisplay').textContent =
-            selectedSeats.length > 0 ? selectedSeats.join(', ') : 'Chưa chọn';
-        document.getElementById('seatCount').textContent = seatCount;
-        document.getElementById('totalPrice').textContent = totalPrice.toLocaleString('vi-VN') + 'đ';
-        document.getElementById('selectedSeats').value = selectedSeats.join(',');
-    }
-
-    // Hàm xử lý chọn ghế
-    function handleSeatClick(event) {
-        const seat = event.target;
-        const seatId = seat.getAttribute('data-seat');
-
-        if (seat.classList.contains('booked')) {
-            return; // Không thể chọn ghế đã đặt
+            updateBookingSummary();
         }
 
-        if (seat.classList.contains('selected')) {
-            // Bỏ chọn ghế
-            seat.classList.remove('selected');
-            selectedSeats = selectedSeats.filter(id => id !== seatId);
-        } else {
-            // Chọn ghế
-            seat.classList.add('selected');
-            selectedSeats.push(seatId);
-        }
+        // Hàm xử lý chọn suất chiếu
+        function handleShowtimeClick(event) {
+            const card = event.target.closest('.showtime-card');
+            if (!card) return;
 
-        updateBookingSummary();
-    }
+            // Bỏ chọn tất cả suất chiếu
+            document.querySelectorAll('.showtime-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('input[name="showtime_id"]').forEach(input => input.checked = false);
 
-    // Hàm xử lý chọn suất chiếu
-    function handleShowtimeClick(event) {
-        const card = event.target.closest('.showtime-card');
-        if (!card) return;
+            // Chọn suất chiếu hiện tại
+            card.classList.add('selected');
+            const radio = card.querySelector('input[name="showtime_id"]');
+            radio.checked = true;
 
-        // Bỏ chọn tất cả suất chiếu
-        document.querySelectorAll('.showtime-card').forEach(c => c.classList.remove('selected'));
-        document.querySelectorAll('input[name="showtime_id"]').forEach(input => input.checked = false);
+            selectedShowtimeId = radio.value;
+            console.log('Selected showtime:', selectedShowtimeId);
 
-        // Chọn suất chiếu hiện tại
-        card.classList.add('selected');
-        const radio = card.querySelector('input[name="showtime_id"]');
-        radio.checked = true;
-
-        selectedShowtimeId = radio.value;
-        console.log('Selected showtime:', selectedShowtimeId);
-
-        // Load ghế đã đặt cho suất chiếu này
-        loadBookedSeats(selectedShowtimeId);
-    }
-
-    // Hàm xác nhận đặt vé
-    function confirmBooking() {
-        // Kiểm tra thông tin khách hàng
-        const customerName = document.getElementById('customer_name').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-
-        if (!customerName || !phone) {
-            showError('Vui lòng điền đầy đủ thông tin khách hàng!');
-            return;
-        }
-
-        // Kiểm tra suất chiếu
-        const showtimeId = document.querySelector('input[name="showtime_id"]:checked');
-        if (!showtimeId) {
-            showError('Vui lòng chọn suất chiếu!');
-            return;
-        }
-
-        // Kiểm tra ghế đã chọn
-        if (selectedSeats.length === 0) {
-            showError('Vui lòng chọn ít nhất 1 ghế!');
-            return;
-        }
-
-        // Submit form
-        document.getElementById('bookingForm').submit();
-    }
-
-    // Hàm hiển thị lỗi
-    function showError(message) {
-        const errorDiv = document.getElementById('errorMessage');
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
-
-        setTimeout(() => {
-            errorDiv.style.display = 'none';
-        }, 5000);
-    }
-
-    // Khởi tạo khi trang load
-    document.addEventListener('DOMContentLoaded', function() {
-        // Thêm event listener cho ghế
-        document.querySelectorAll('.seat').forEach(seat => {
-            seat.addEventListener('click', handleSeatClick);
-        });
-
-        // Thêm event listener cho suất chiếu
-        document.querySelectorAll('.showtime-card').forEach(card => {
-            card.addEventListener('click', handleShowtimeClick);
-        });
-
-        // Nếu có suất chiếu được chọn sẵn, load ghế đã đặt
-        const selectedShowtime = document.querySelector('input[name="showtime_id"]:checked');
-        if (selectedShowtime) {
-            selectedShowtimeId = selectedShowtime.value;
-            selectedShowtime.closest('.showtime-card').classList.add('selected');
+            // Load ghế đã đặt cho suất chiếu này
             loadBookedSeats(selectedShowtimeId);
         }
 
-        // Cập nhật summary ban đầu
-        updateBookingSummary();
-    });
+        // Hàm xác nhận đặt vé
+        function confirmBooking() {
+            // Kiểm tra thông tin khách hàng
+            const customerName = document.getElementById('customer_name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            if (!customerName || !phone) {
+                showError('Vui lòng điền đầy đủ thông tin khách hàng!');
+                return;
+            }
+
+            // Kiểm tra suất chiếu
+            const showtimeId = document.querySelector('input[name="showtime_id"]:checked');
+            if (!showtimeId) {
+                showError('Vui lòng chọn suất chiếu!');
+                return;
+            }
+
+            // Kiểm tra ghế đã chọn
+            if (selectedSeats.length === 0) {
+                showError('Vui lòng chọn ít nhất 1 ghế!');
+                return;
+            }
+
+            // Submit form
+            document.getElementById('bookingForm').submit();
+        }
+
+        // Hàm hiển thị lỗi
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Khởi tạo khi trang load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Thêm event listener cho ghế
+            document.querySelectorAll('.seat').forEach(seat => {
+                seat.addEventListener('click', handleSeatClick);
+            });
+
+            // Thêm event listener cho suất chiếu
+            document.querySelectorAll('.showtime-card').forEach(card => {
+                card.addEventListener('click', handleShowtimeClick);
+            });
+
+            // Nếu có suất chiếu được chọn sẵn, load ghế đã đặt
+            const selectedShowtime = document.querySelector('input[name="showtime_id"]:checked');
+            if (selectedShowtime) {
+                selectedShowtimeId = selectedShowtime.value;
+                selectedShowtime.closest('.showtime-card').classList.add('selected');
+                loadBookedSeats(selectedShowtimeId);
+            }
+
+            // Cập nhật summary ban đầu
+            updateBookingSummary();
+        });
     </script>
 </body>
 

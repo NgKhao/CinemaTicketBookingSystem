@@ -679,7 +679,8 @@ function getTierBadge($tier_name)
                                         <?php echo number_format($booking['final_price']); ?>đ
                                     </span>
                                     <?php if ($booking['voucher_code']): ?>
-                                        <span style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-left: 5px;">
+                                        <span
+                                            style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-left: 5px;">
                                             <i class="fas fa-tag"></i> <?php echo htmlspecialchars($booking['voucher_code']); ?>
                                         </span>
                                     <?php endif; ?>
