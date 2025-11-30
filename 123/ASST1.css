@@ -1459,7 +1459,8 @@ form button:hover {
 .admin-link,
 .logout-btn,
 .login-btn,
-.register-btn {
+.register-btn,
+.member-btn {
   color: white;
   text-decoration: none;
   padding: 5px 15px;
@@ -1470,6 +1471,16 @@ form button:hover {
 .admin-link:hover,
 .logout-btn:hover {
   background: #e50914;
+}
+
+.member-btn {
+  background: linear-gradient(135deg, #ffd700 0%, #ff9800 100%);
+  font-weight: bold;
+}
+
+.member-btn:hover {
+  background: linear-gradient(135deg, #ffed4e 0%, #ffa726 100%);
+  transform: translateY(-2px);
 }
 
 .login-btn:hover,

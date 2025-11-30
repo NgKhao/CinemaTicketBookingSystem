@@ -27,30 +27,31 @@
         <!-- User Status Bar -->
         <div class="user-status-bar">
             <?php if ($isLoggedIn): ?>
-            <div class="user-info">
-                <i class="fas fa-user"></i> Xin chào, <strong><?php echo $username; ?></strong>
-                <?php if ($userRole === 'admin'): ?>
-                <a href="admin.php" class="admin-link"><i class="fas fa-cog"></i> Quản trị</a>
-                <?php endif; ?>
-            </div>
-            <!-- Search Bar -->
-            <div class="search-container">
-                <form method="GET" action="search_movies.php" class="search-form">
-                    <input type="text" name="q" placeholder="Tìm kiếm phim..." class="search-input"
-                        value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>">
-                    <button type="submit" class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-            </div>
-            <div class="user-actions">
-                <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-            </div>
+                <div class="user-info">
+                    <i class="fas fa-user"></i> Xin chào, <strong><?php echo $username; ?></strong>
+                    <?php if ($userRole === 'admin'): ?>
+                        <a href="admin.php" class="admin-link"><i class="fas fa-cog"></i> Quản trị</a>
+                    <?php endif; ?>
+                </div>
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <form method="GET" action="search_movies.php" class="search-form">
+                        <input type="text" name="q" placeholder="Tìm kiếm phim..." class="search-input"
+                            value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>">
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="user-actions">
+                    <a href="member_profile.php" class="member-btn"><i class="fas fa-award"></i> Thành viên</a>
+                    <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                </div>
             <?php else: ?>
-            <div class="user-actions">
-                <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
-                <a href="register.html" class="register-btn"><i class="fas fa-user-plus"></i> Đăng ký</a>
-            </div>
+                <div class="user-actions">
+                    <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+                    <a href="register.html" class="register-btn"><i class="fas fa-user-plus"></i> Đăng ký</a>
+                </div>
             <?php endif; ?>
         </div>
 

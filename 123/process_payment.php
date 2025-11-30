@@ -19,6 +19,11 @@ if ($_POST) {
     $payment_method = $_POST['payment_method'] ?? '';
     $booking_data = $_SESSION['booking_data'];
 
+    // Lấy thông tin voucher và giá cuối cùng
+    $voucher_id = !empty($_POST['voucher_id']) ? intval($_POST['voucher_id']) : null;
+    $discount_amount = !empty($_POST['discount_amount']) ? floatval($_POST['discount_amount']) : 0;
+    $final_price = !empty($_POST['final_price']) ? floatval($_POST['final_price']) : 0;
+
     if (empty($payment_method)) {
         echo "<script>alert('Vui lòng chọn phương thức thanh toán!'); window.location.href='payment_method.php';</script>";
         exit;
@@ -64,8 +69,8 @@ if ($_POST) {
             $status = 'pending';
         }
 
-        // Lưu đặt vé với status phù hợp
-        $stmt = $pdo->prepare("INSERT INTO bookings (user_id, customer_name, phone, showtime_id, seats, total_price, status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        // Lưu đặt vé với status phù hợp và thông tin voucher
+        $stmt = $pdo->prepare("INSERT INTO bookings (user_id, customer_name, phone, showtime_id, seats, total_price, discount_amount, final_price, voucher_id, status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $booking_data['user_id'],
             $booking_data['customer_name'],
@@ -73,6 +78,9 @@ if ($_POST) {
             $booking_data['showtime_id'],
             $booking_data['seats'],
             $total_price,
+            $discount_amount,
+            $final_price > 0 ? $final_price : $total_price, // Sử dụng final_price nếu có, không thì dùng total_price
+            $voucher_id,
             $status,
             $payment_method
         ]);
@@ -87,6 +95,57 @@ if ($_POST) {
         // Cập nhật số ghế còn lại
         $stmt = $pdo->prepare("UPDATE showtimes SET available_seats = available_seats - ? WHERE id = ?");
         $stmt->execute([count($seatArray), $booking_data['showtime_id']]);
+
+        // Xử lý voucher nếu có
+        if ($voucher_id) {
+            // Lưu lịch sử sử dụng voucher
+            $stmt = $pdo->prepare("INSERT INTO voucher_usage (voucher_id, user_id, booking_id, discount_amount, used_at) VALUES (?, ?, ?, ?, NOW())");
+            $stmt->execute([$voucher_id, $booking_data['user_id'], $booking_id, $discount_amount]);
+
+            // Tăng số lần sử dụng voucher
+            $stmt = $pdo->prepare("UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?");
+            $stmt->execute([$voucher_id]);
+        }
+
+        // Tích điểm cho thanh toán tại quầy (cho VNPay sẽ tích khi callback thành công)
+        if ($payment_method === 'counter') {
+            // Tính điểm: 1 điểm = 1,000 VND
+            $points_earned = floor(($final_price > 0 ? $final_price : $total_price) / 1000);
+
+            if ($points_earned > 0) {
+                // Cộng điểm cho user
+                $stmt = $pdo->prepare("UPDATE users SET member_points = member_points + ? WHERE id = ?");
+                $stmt->execute([$points_earned, $booking_data['user_id']]);
+
+                // Lấy tổng điểm hiện tại
+                $stmt = $pdo->prepare("SELECT member_points FROM users WHERE id = ?");
+                $stmt->execute([$booking_data['user_id']]);
+                $current_points = $stmt->fetchColumn();
+
+                // Kiểm tra và cập nhật hạng thành viên
+                $stmt = $pdo->prepare("SELECT id FROM member_tiers WHERE min_points <= ? ORDER BY min_points DESC LIMIT 1");
+                $stmt->execute([$current_points]);
+                $new_tier_id = $stmt->fetchColumn();
+
+                if ($new_tier_id) {
+                    $stmt = $pdo->prepare("UPDATE users SET member_tier_id = ? WHERE id = ?");
+                    $stmt->execute([$new_tier_id, $booking_data['user_id']]);
+                }
+
+                // Ghi log lịch sử tích điểm
+                $stmt = $pdo->prepare("INSERT INTO point_history (user_id, booking_id, points, type, description, created_at) VALUES (?, ?, ?, 'earn', ?, NOW())");
+                $stmt->execute([
+                    $booking_data['user_id'],
+                    $booking_id,
+                    $points_earned,
+                    "Tích điểm từ đặt vé #" . str_pad($booking_id, 6, '0', STR_PAD_LEFT)
+                ]);
+
+                // Cập nhật điểm vào booking
+                $stmt = $pdo->prepare("UPDATE bookings SET points_earned = ? WHERE id = ?");
+                $stmt->execute([$points_earned, $booking_id]);
+            }
+        }
 
         $pdo->commit();
 

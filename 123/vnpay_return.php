@@ -89,6 +89,44 @@ try {
         ");
         $stmt->execute([$booking_id]);
 
+        // Tích điểm cho user
+        $actual_price = $booking['final_price'] > 0 ? $booking['final_price'] : $booking['total_price'];
+        $points_earned = floor($actual_price / 1000); // 1 điểm = 1,000 VND
+
+        if ($points_earned > 0) {
+            // Cộng điểm cho user
+            $stmt = $pdo->prepare("UPDATE users SET member_points = member_points + ? WHERE id = ?");
+            $stmt->execute([$points_earned, $booking['user_id']]);
+
+            // Lấy tổng điểm hiện tại
+            $stmt = $pdo->prepare("SELECT member_points FROM users WHERE id = ?");
+            $stmt->execute([$booking['user_id']]);
+            $current_points = $stmt->fetchColumn();
+
+            // Kiểm tra và cập nhật hạng thành viên
+            $stmt = $pdo->prepare("SELECT id FROM member_tiers WHERE min_points <= ? ORDER BY min_points DESC LIMIT 1");
+            $stmt->execute([$current_points]);
+            $new_tier_id = $stmt->fetchColumn();
+
+            if ($new_tier_id) {
+                $stmt = $pdo->prepare("UPDATE users SET member_tier_id = ? WHERE id = ?");
+                $stmt->execute([$new_tier_id, $booking['user_id']]);
+            }
+
+            // Ghi log lịch sử tích điểm
+            $stmt = $pdo->prepare("INSERT INTO point_history (user_id, booking_id, points, type, description, created_at) VALUES (?, ?, ?, 'earn', ?, NOW())");
+            $stmt->execute([
+                $booking['user_id'],
+                $booking_id,
+                $points_earned,
+                "Tích điểm từ thanh toán VNPay #" . str_pad($booking_id, 6, '0', STR_PAD_LEFT)
+            ]);
+
+            // Cập nhật điểm vào booking
+            $stmt = $pdo->prepare("UPDATE bookings SET points_earned = ? WHERE id = ?");
+            $stmt->execute([$points_earned, $booking_id]);
+        }
+
         // Lưu thông tin giao dịch VNPay (tạo bảng payment_transactions nếu cần)
         try {
             $stmt = $pdo->prepare("
@@ -186,268 +224,268 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="./img/4.png">
     <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    .result-container {
-        max-width: 600px;
-        background: white;
-        border-radius: 15px;
-        padding: 40px;
-        text-align: center;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .success-icon {
-        color: #28a745;
-        font-size: 80px;
-        margin-bottom: 20px;
-    }
-
-    .error-icon {
-        color: #dc3545;
-        font-size: 80px;
-        margin-bottom: 20px;
-    }
-
-    .warning-icon {
-        color: #ffc107;
-        font-size: 80px;
-        margin-bottom: 20px;
-    }
-
-    .result-title {
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-
-    .success-title {
-        color: #28a745;
-    }
-
-    .error-title {
-        color: #dc3545;
-    }
-
-    .warning-title {
-        color: #ffc107;
-    }
-
-    .result-message {
-        color: #666;
-        margin-bottom: 30px;
-        line-height: 1.6;
-        font-size: 16px;
-    }
-
-    .transaction-info {
-        background: #f8f9fa;
-        padding: 25px;
-        border-radius: 10px;
-        margin-bottom: 30px;
-        text-align: left;
-    }
-
-    .info-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 12px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .info-row:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-    }
-
-    .info-label {
-        font-weight: bold;
-        color: #333;
-        flex: 1;
-    }
-
-    .info-value {
-        flex: 2;
-        text-align: right;
-        color: #666;
-    }
-
-    .btn {
-        display: inline-block;
-        padding: 15px 30px;
-        background: #e50914;
-        color: white;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: bold;
-        margin: 0 10px 10px 0;
-        transition: all 0.3s;
-        border: none;
-        cursor: pointer;
-    }
-
-    .btn:hover {
-        background: #b8070f;
-        transform: translateY(-2px);
-        text-decoration: none;
-        color: white;
-    }
-
-    .btn-outline {
-        background: transparent;
-        border: 2px solid #e50914;
-        color: #e50914;
-    }
-
-    .btn-outline:hover {
-        background: #e50914;
-        color: white;
-    }
-
-    .btn-success {
-        background: #28a745;
-    }
-
-    .btn-success:hover {
-        background: #218838;
-    }
-
-    @media (max-width: 768px) {
         .result-container {
-            margin: 10px;
-            padding: 30px 20px;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-icon {
+            color: #28a745;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .error-icon {
+            color: #dc3545;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .warning-icon {
+            color: #ffc107;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .success-title {
+            color: #28a745;
+        }
+
+        .error-title {
+            color: #dc3545;
+        }
+
+        .warning-title {
+            color: #ffc107;
+        }
+
+        .result-message {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .transaction-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: left;
         }
 
         .info-row {
-            flex-direction: column;
-            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #333;
+            flex: 1;
         }
 
         .info-value {
-            text-align: left;
-            margin-top: 5px;
-            font-weight: bold;
+            flex: 2;
+            text-align: right;
+            color: #666;
         }
-    }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #e50914;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 0 10px 10px 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #b8070f;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e50914;
+            color: #e50914;
+        }
+
+        .btn-outline:hover {
+            background: #e50914;
+            color: white;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        @media (max-width: 768px) {
+            .result-container {
+                margin: 10px;
+                padding: 30px 20px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .info-value {
+                text-align: left;
+                margin-top: 5px;
+                font-weight: bold;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="result-container">
         <?php if ($paymentStatus == 'success'): ?>
-        <!-- Thanh toán thành công -->
-        <div class="success-icon">
-            <i class="fas fa-check-circle"></i>
-        </div>
-        <h2 class="result-title success-title">Thanh toán thành công!</h2>
-        <p class="result-message">
-            Cảm ơn bạn đã thanh toán qua VNPay. Vé xem phim của bạn đã được xác nhận và thanh toán thành công.
-        </p>
+            <!-- Thanh toán thành công -->
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="result-title success-title">Thanh toán thành công!</h2>
+            <p class="result-message">
+                Cảm ơn bạn đã thanh toán qua VNPay. Vé xem phim của bạn đã được xác nhận và thanh toán thành công.
+            </p>
 
-        <div class="transaction-info">
-            <div class="info-row">
-                <span class="info-label">Mã đơn hàng:</span>
-                <span class="info-value"><?= htmlspecialchars($vnp_TxnRef) ?></span>
+            <div class="transaction-info">
+                <div class="info-row">
+                    <span class="info-label">Mã đơn hàng:</span>
+                    <span class="info-value"><?= htmlspecialchars($vnp_TxnRef) ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Mã giao dịch VNPay:</span>
+                    <span class="info-value"><?= htmlspecialchars($vnp_TransactionNo) ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Số tiền:</span>
+                    <span class="info-value"><?= number_format($vnp_Amount) ?>đ</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Ngân hàng:</span>
+                    <span class="info-value"><?= htmlspecialchars($vnp_BankCode) ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Thời gian thanh toán:</span>
+                    <span class="info-value">
+                        <?= $vnp_PayDate ? date('d/m/Y H:i:s', strtotime($vnp_PayDate)) : date('d/m/Y H:i:s') ?>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Trạng thái:</span>
+                    <span class="info-value" style="color: #28a745; font-weight: bold;">Thành công</span>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Mã giao dịch VNPay:</span>
-                <span class="info-value"><?= htmlspecialchars($vnp_TransactionNo) ?></span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Số tiền:</span>
-                <span class="info-value"><?= number_format($vnp_Amount) ?>đ</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Ngân hàng:</span>
-                <span class="info-value"><?= htmlspecialchars($vnp_BankCode) ?></span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Thời gian thanh toán:</span>
-                <span class="info-value">
-                    <?= $vnp_PayDate ? date('d/m/Y H:i:s', strtotime($vnp_PayDate)) : date('d/m/Y H:i:s') ?>
-                </span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Trạng thái:</span>
-                <span class="info-value" style="color: #28a745; font-weight: bold;">Thành công</span>
-            </div>
-        </div>
 
-        <a href="booking_invoice.php" class="btn btn-success">
-            <i class="fas fa-receipt"></i> Xem hóa đơn chi tiết
-        </a>
-        <br>
-        <a href="index.php" class="btn btn-outline">
-            <i class="fas fa-home"></i> Về trang chủ
-        </a>
-        <a href="datve.php" class="btn">
-            <i class="fas fa-plus"></i> Đặt vé khác
-        </a>
+            <a href="booking_invoice.php" class="btn btn-success">
+                <i class="fas fa-receipt"></i> Xem hóa đơn chi tiết
+            </a>
+            <br>
+            <a href="index.php" class="btn btn-outline">
+                <i class="fas fa-home"></i> Về trang chủ
+            </a>
+            <a href="datve.php" class="btn">
+                <i class="fas fa-plus"></i> Đặt vé khác
+            </a>
 
         <?php else: ?>
-        <!-- Thanh toán thất bại hoặc lỗi -->
-        <div class="<?= $paymentStatus == 'failed' ? 'warning-icon' : 'error-icon' ?>">
-            <i class="fas fa-<?= $paymentStatus == 'failed' ? 'exclamation-triangle' : 'times-circle' ?>"></i>
-        </div>
-        <h2 class="result-title <?= $paymentStatus == 'failed' ? 'warning-title' : 'error-title' ?>">
-            <?= $paymentStatus == 'failed' ? 'Thanh toán không thành công!' : 'Có lỗi xảy ra!' ?>
-        </h2>
-        <p class="result-message">
-            <?= htmlspecialchars($message) ?>
-        </p>
+            <!-- Thanh toán thất bại hoặc lỗi -->
+            <div class="<?= $paymentStatus == 'failed' ? 'warning-icon' : 'error-icon' ?>">
+                <i class="fas fa-<?= $paymentStatus == 'failed' ? 'exclamation-triangle' : 'times-circle' ?>"></i>
+            </div>
+            <h2 class="result-title <?= $paymentStatus == 'failed' ? 'warning-title' : 'error-title' ?>">
+                <?= $paymentStatus == 'failed' ? 'Thanh toán không thành công!' : 'Có lỗi xảy ra!' ?>
+            </h2>
+            <p class="result-message">
+                <?= htmlspecialchars($message) ?>
+            </p>
 
-        <?php if ($vnp_TxnRef): ?>
-        <div class="transaction-info">
-            <div class="info-row">
-                <span class="info-label">Mã đơn hàng:</span>
-                <span class="info-value"><?= htmlspecialchars($vnp_TxnRef) ?></span>
-            </div>
-            <?php if ($vnp_ResponseCode): ?>
-            <div class="info-row">
-                <span class="info-label">Mã lỗi:</span>
-                <span class="info-value"><?= htmlspecialchars($vnp_ResponseCode) ?></span>
-            </div>
+            <?php if ($vnp_TxnRef): ?>
+                <div class="transaction-info">
+                    <div class="info-row">
+                        <span class="info-label">Mã đơn hàng:</span>
+                        <span class="info-value"><?= htmlspecialchars($vnp_TxnRef) ?></span>
+                    </div>
+                    <?php if ($vnp_ResponseCode): ?>
+                        <div class="info-row">
+                            <span class="info-label">Mã lỗi:</span>
+                            <span class="info-value"><?= htmlspecialchars($vnp_ResponseCode) ?></span>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($vnp_Amount > 0): ?>
+                        <div class="info-row">
+                            <span class="info-label">Số tiền:</span>
+                            <span class="info-value"><?= number_format($vnp_Amount) ?>đ</span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="info-row">
+                        <span class="info-label">Thời gian:</span>
+                        <span class="info-value"><?= date('d/m/Y H:i:s') ?></span>
+                    </div>
+                </div>
             <?php endif; ?>
-            <?php if ($vnp_Amount > 0): ?>
-            <div class="info-row">
-                <span class="info-label">Số tiền:</span>
-                <span class="info-value"><?= number_format($vnp_Amount) ?>đ</span>
-            </div>
-            <?php endif; ?>
-            <div class="info-row">
-                <span class="info-label">Thời gian:</span>
-                <span class="info-value"><?= date('d/m/Y H:i:s') ?></span>
-            </div>
-        </div>
-        <?php endif; ?>
 
-        <a href="datve.php" class="btn">
-            <i class="fas fa-redo"></i> Thử đặt vé lại
-        </a>
-        <a href="index.php" class="btn btn-outline">
-            <i class="fas fa-home"></i> Về trang chủ
-        </a>
+            <a href="datve.php" class="btn">
+                <i class="fas fa-redo"></i> Thử đặt vé lại
+            </a>
+            <a href="index.php" class="btn btn-outline">
+                <i class="fas fa-home"></i> Về trang chủ
+            </a>
         <?php endif; ?>
     </div>
 
     <script>
-    // Auto redirect to invoice after 3 seconds if payment successful
-    <?php if ($paymentStatus == 'success'): ?>
-    setTimeout(function() {
-        // Uncomment below line to enable auto redirect
-        window.location.href = 'booking_invoice.php';
-    }, 5000);
-    <?php endif; ?>
+        // Auto redirect to invoice after 3 seconds if payment successful
+        <?php if ($paymentStatus == 'success'): ?>
+            setTimeout(function() {
+                // Uncomment below line to enable auto redirect
+                window.location.href = 'booking_invoice.php';
+            }, 5000);
+        <?php endif; ?>
     </script>
 </body>
 
